@@ -161,13 +161,15 @@ export const Hero: React.FC = () => {
                       element.scrollIntoView({ behavior: 'smooth' });
                     }
                   }}
-                  className="group relative px-8 py-4 bg-gradient-to-r from-[#0055B8] to-[#0284c7] rounded-full text-white font-bold font-inter overflow-hidden shadow-[0_0_20px_rgba(0,85,184,0.4)] transition-all hover:shadow-[0_0_30px_rgba(34,211,238,0.5)] interactive w-full sm:w-auto"
+                  className="group relative px-10 py-5 bg-slate-950/50 backdrop-blur-md border border-cyan-500/30 rounded-full text-white font-bold font-syne uppercase tracking-[0.15em] text-sm overflow-hidden transition-all duration-300 hover:border-cyan-400 hover:shadow-[0_0_40px_rgba(34,211,238,0.4)] hover:scale-105 interactive w-full sm:w-auto"
                 >
-                  <span className="relative z-10 flex items-center justify-center gap-2">
-                    Cek Jatah Kuotamu
+                  <span className="relative z-10 flex items-center justify-center gap-3">
+                    CEK JATAH KUOTAMU
                     <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                   </span>
-                  <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out" />
+
+                  {/* Hover Fill Effect */}
+                  <div className="absolute inset-0 bg-cyan-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out z-0" />
                 </button>
               </MagneticButton>
             </div>
@@ -221,6 +223,13 @@ export const Hero: React.FC = () => {
         @keyframes spin {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
+        }
+        @keyframes shimmer {
+            0% { transform: translateX(-150%) skewX(12deg); }
+            100% { transform: translateX(150%) skewX(12deg); }
+        }
+        .animate-shimmer {
+            animation: shimmer 3s infinite;
         }
       `}</style>
     </section>
