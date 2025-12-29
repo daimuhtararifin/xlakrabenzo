@@ -12,12 +12,9 @@ const faqData = [
   },
   {
     question: "Bisa digunakan untuk pengguna kartu Axis?",
-    answer: "Bisa banget! Karena Axis adalah bagian dari XL Axiata, paket Akrab Premium ini mendukung penuh nomor Axis untuk menikmati benefit kuota yang sama."
+    answer: "Bisa banget! Karena Axis adalah bagian dari XL Axiata, paket Akrab ini mendukung penuh nomor Axis untuk menikmati benefit kuota yang sama."
   },
-  {
-    question: "Bagaimana proses perpanjangan tiap bulannya?",
-    answer: "Admin akan memberikan pengingat via WhatsApp H-3 sebelum masa aktif habis. Kamu cukup melakukan pembayaran flat sesuai harga awal untuk melanjutkan masa aktif slotmu."
-  },
+
   {
     question: "Apakah data dan nomor saya aman?",
     answer: "Privasi kamu prioritas kami. Nomor kamu hanya digunakan sebagai identitas member di dalam grup paket dan tidak akan disebarluaskan ke pihak manapun."
@@ -90,17 +87,17 @@ const AccordionItem: React.FC<{ item: typeof faqData[0], index: number }> = ({ i
         <span className={`font-inter font-semibold text-base md:text-lg transition-colors ${isOpen ? 'text-royal' : 'text-slate-800'}`}>
           {item.question}
         </span>
-        
-        <div 
-          ref={iconRef} 
+
+        <div
+          ref={iconRef}
           className={`w-8 h-8 rounded-full flex items-center justify-center border transition-colors ${isOpen ? 'bg-royal text-white border-royal' : 'bg-white text-slate-400 border-slate-200 group-hover:border-royal/50 group-hover:text-royal'}`}
         >
           <Plus size={18} />
         </div>
       </button>
 
-      <div 
-        ref={contentRef} 
+      <div
+        ref={contentRef}
         className="h-0 overflow-hidden"
       >
         <div className="pb-6 px-2">
@@ -139,12 +136,12 @@ export const FAQ: React.FC = () => {
 
   return (
     <section id="faq" ref={containerRef} className="py-24 w-full bg-[#F8FAFC] relative overflow-hidden">
-      
+
       {/* Background Soft Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-royal/5 blur-[120px] rounded-full pointer-events-none mix-blend-multiply" />
 
       <div className="container mx-auto px-4 md:px-6 relative z-10">
-        
+
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="font-clash font-bold text-4xl md:text-5xl text-slate-900 mb-6 tracking-tight">

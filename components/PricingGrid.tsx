@@ -45,7 +45,7 @@ export const PricingGrid: React.FC<PricingGridProps> = ({ areaData }) => {
   return (
     <section id="paket" className="relative py-20 w-full z-10" ref={containerRef}>
       <div className="container mx-auto px-4 md:px-6">
-        
+
         {/* Headline */}
         <div className="text-center mb-16">
           <h2 className="font-clash font-bold text-4xl md:text-5xl mb-4">
@@ -56,35 +56,37 @@ export const PricingGrid: React.FC<PricingGridProps> = ({ areaData }) => {
 
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-          
+
           {/* Card XL */}
           <PricingCard
             ref={el => { if (el) cardRefs.current[0] = el }}
-            title="Akrab XL Premium"
+            title="Akrab XL @enzonixc"
             variant="XL"
             totalGB={xlTotal}
-            price="Rp 58.000"
+            price="Rp 75.000"
             baseData={{ base: 20, nat: 1.5, reward: 14 }}
             bonusLokal={areaData?.bonusXL || 0}
+            city={areaData?.city}
             accentColor="#22D3EE" // Cyan
           />
 
           {/* Card XXL */}
           <PricingCard
             ref={el => { if (el) cardRefs.current[1] = el }}
-            title="Akrab XXL Premium"
+            title="Akrab XXL @enzonixc"
             variant="XXL"
             totalGB={xxlTotal}
-            price="Rp 83.000"
+            price="Rp 95.000"
             baseData={{ base: 40, nat: 7.5, reward: 20 }}
             bonusLokal={areaData?.bonusXXL || 0}
+            city={areaData?.city}
             accentColor="#0055B8" // Royal Blue
             isBestValue
           />
 
         </div>
       </div>
-      
+
       {/* CSS for Shimmer */}
       <style>{`
         @keyframes shimmer {
@@ -108,14 +110,15 @@ interface PricingCardProps {
   price: string;
   baseData: { base: number; nat: number; reward: number };
   bonusLokal: number;
+  city?: string;
   accentColor: string;
   isBestValue?: boolean;
 }
 
-const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(({ 
-  title, variant, totalGB, price, baseData, bonusLokal, accentColor, isBestValue 
+const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(({
+  title, variant, totalGB, price, baseData, bonusLokal, city, accentColor, isBestValue
 }, ref) => {
-  
+
   const cardRef = useRef<HTMLDivElement>(null);
   const gbRef = useRef<HTMLSpanElement>(null);
 
@@ -134,7 +137,7 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(({
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      
+
       card.style.setProperty('--mouse-x', `${x}px`);
       card.style.setProperty('--mouse-y', `${y}px`);
     };
@@ -142,6 +145,18 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(({
     card.addEventListener('mousemove', handleMouseMove);
     return () => card.removeEventListener('mousemove', handleMouseMove);
   }, []);
+
+  // Construct WhatsApp Link
+  const waLink = React.useMemo(() => {
+    // Default values if no city selected
+    const userCity = city || 'Lokasi Saya';
+    const variantName = variant === 'XL' ? 'Varian XL' : 'Varian XXL';
+
+    // Message format: "Hi enzo, aku dari {Kab/Kota] mau beli kuota akrab [Varian XL/XXL] [Total kuota] dengan harga [Rp75.000/Rp.95.000]"
+    const text = `Hi enzo, aku dari ${userCity} mau beli kuota akrab ${variantName} ${totalGB}GB dengan harga ${price}`;
+
+    return `https://wa.me/6287777422043?text=${encodeURIComponent(text)}`;
+  }, [city, variant, totalGB, price]);
 
   // Counting Animation when totalGB changes
   useEffect(() => {
@@ -159,20 +174,20 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(({
   }, [totalGB]);
 
   return (
-    <div 
+    <div
       ref={cardRef}
       className="relative group rounded-3xl p-[1px] bg-white/5 backdrop-blur-2xl transition-all duration-300 hover:scale-[1.02]"
     >
       {/* Dynamic Border Gradient via CSS Variables */}
-      <div 
+      <div
         className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
         style={{
           background: `radial-gradient(800px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), ${accentColor}40, transparent 40%)`
         }}
       />
-      
+
       <div className="h-full bg-[#0a0a0a]/80 backdrop-blur-xl rounded-3xl p-8 flex flex-col relative overflow-hidden">
-        
+
         {/* Best Value Badge */}
         {isBestValue && (
           <div className="absolute top-6 right-6">
@@ -185,14 +200,14 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(({
 
         {/* Header */}
         <div className="mb-6">
-            <h3 className="text-gray-400 font-inter text-sm tracking-wide uppercase mb-2">{title}</h3>
-            <div className="flex items-baseline gap-1">
-                <span ref={gbRef} className="font-clash font-bold text-5xl md:text-6xl text-white">0</span>
-                <span className="text-2xl font-clash text-gray-500">GB</span>
-            </div>
-            <p className={`text-sm mt-1 font-medium ${bonusLokal > 0 ? 'text-emerald-400 animate-pulse' : 'text-gray-500'}`}>
-                {bonusLokal > 0 ? `+ Included ${bonusLokal}GB Local Bonus` : 'Local bonus not included yet'}
-            </p>
+          <h3 className="text-gray-400 font-inter text-sm tracking-wide uppercase mb-2">{title}</h3>
+          <div className="flex items-baseline gap-1">
+            <span ref={gbRef} className="font-clash font-bold text-5xl md:text-6xl text-white">0</span>
+            <span className="text-2xl font-clash text-gray-500">GB</span>
+          </div>
+          <p className={`text-sm mt-1 font-medium ${bonusLokal > 0 ? 'text-emerald-400 animate-pulse' : 'text-gray-500'}`}>
+            {bonusLokal > 0 ? `+ Included ${bonusLokal}GB Local Bonus` : 'Local bonus not included yet'}
+          </p>
         </div>
 
         {/* Divider */}
@@ -200,44 +215,44 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(({
 
         {/* Features List */}
         <div className="flex-1 space-y-4 mb-8">
-            <FeatureRow label="Kuota Utama" value={`${baseData.base} GB`} />
-            <FeatureRow label="Kuota Nasional" value={`${baseData.nat} GB`} />
-            <FeatureRow label="Reward Akrab" value={`${baseData.reward} GB`} />
-            <FeatureRow 
-                label="Bonus Lokal" 
-                value={bonusLokal > 0 ? `${bonusLokal} GB` : 'Cek Area'} 
-                isHighlight={bonusLokal > 0} 
-                color={accentColor}
-            />
-            <div className="flex items-center gap-2 text-gray-400 text-sm mt-4">
-                <Crown size={14} className="text-yellow-500" />
-                <span>Unlimited WhatsApp & Maps</span>
-            </div>
-             <div className="flex items-center gap-2 text-gray-400 text-sm">
-                <Smartphone size={14} className="text-blue-400" />
-                <span>Gratis Nelpon & SMS ke XL/Axis</span>
-            </div>
+          <FeatureRow label="Kuota Utama" value={`${baseData.base} GB`} />
+          <FeatureRow label="Kuota Nasional" value={`${baseData.nat} GB`} />
+          <FeatureRow label="Reward Akrab" value={`${baseData.reward} GB`} />
+          <FeatureRow
+            label="Bonus Lokal"
+            value={bonusLokal > 0 ? `${bonusLokal} GB` : 'Cek Area'}
+            isHighlight={bonusLokal > 0}
+            color={accentColor}
+          />
+
+          <div className="flex items-center gap-2 text-gray-400 text-sm">
+            <Smartphone size={14} className="text-blue-400" />
+            <span>Gratis Nelpon & SMS ke XL/Axis/Smartfren</span>
+          </div>
         </div>
 
         {/* Price & CTA */}
         <div className="mt-auto">
-            <div className="mb-4">
-                <p className="text-sm text-gray-500">Harga Resmi</p>
-                <p className="text-3xl font-clash font-bold text-white">{price} <span className="text-base font-normal text-gray-600">/bln</span></p>
-            </div>
-            
-            <MagneticButton className="w-full">
-                <button 
-                  className={`w-full py-4 rounded-xl font-bold font-inter text-white transition-transform active:scale-95 shadow-lg relative overflow-hidden group/btn`}
-                  style={{ background: `linear-gradient(45deg, ${accentColor}, ${variant === 'XXL' ? '#003380' : '#0891b2'})` }}
-                >
-                    <span className="relative z-10 flex items-center justify-center gap-2">
-                        Amankan Slot
-                        <Zap size={18} className="fill-white" />
-                    </span>
-                    <div className="absolute inset-0 bg-white/20 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300 ease-out" />
-                </button>
-            </MagneticButton>
+          <div className="mb-4">
+            <p className="text-sm text-gray-500">Harga Resmi</p>
+            <p className="text-3xl font-clash font-bold text-white">{price} <span className="text-base font-normal text-gray-600">/bln</span></p>
+          </div>
+
+          <MagneticButton className="w-full">
+            <a
+              href={waLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`block w-full py-4 rounded-xl font-bold font-inter text-white transition-transform active:scale-95 shadow-lg relative overflow-hidden group/btn text-center`}
+              style={{ background: `linear-gradient(45deg, ${accentColor}, ${variant === 'XXL' ? '#003380' : '#0891b2'})` }}
+            >
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                Amankan Slot
+                <Zap size={18} className="fill-white" />
+              </span>
+              <div className="absolute inset-0 bg-white/20 translate-y-full group-hover/btn:translate-y-0 transition-transform duration-300 ease-out" />
+            </a>
+          </MagneticButton>
         </div>
 
       </div>
@@ -247,12 +262,12 @@ const PricingCard = React.forwardRef<HTMLDivElement, PricingCardProps>(({
 
 // Simple Helper for Feature Rows
 const FeatureRow = ({ label, value, isHighlight, color }: { label: string, value: string, isHighlight?: boolean, color?: string }) => (
-    <div className="flex justify-between items-center text-sm">
-        <span className="text-gray-400 flex items-center gap-2">
-            <Check size={14} className="text-white/20" /> {label}
-        </span>
-        <span className={`font-semibold ${isHighlight ? '' : 'text-white'}`} style={{ color: isHighlight ? color : undefined }}>
-            {value}
-        </span>
-    </div>
+  <div className="flex justify-between items-center text-sm">
+    <span className="text-gray-400 flex items-center gap-2">
+      <Check size={14} className="text-white/20" /> {label}
+    </span>
+    <span className={`font-semibold ${isHighlight ? '' : 'text-white'}`} style={{ color: isHighlight ? color : undefined }}>
+      {value}
+    </span>
+  </div>
 );

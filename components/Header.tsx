@@ -14,22 +14,21 @@ export const Header: React.FC = () => {
   }, []);
 
   return (
-    <header 
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-[#050507]/80 backdrop-blur-lg border-b border-white/5 py-4' : 'bg-transparent py-6'
-      }`}
+    <header
+      className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-[#050507]/80 backdrop-blur-lg border-b border-white/5 py-4' : 'bg-transparent py-6'
+        }`}
     >
       <div className="container mx-auto px-4 md:px-6 flex justify-between items-center">
         {/* Logo */}
         <div className="font-clash font-bold text-xl md:text-2xl text-white tracking-wide">
-          Akrab <span className="text-cyan">XL</span> Premium
+          Akrab <span className="text-cyan">XL</span> @enzonixc
         </div>
 
         {/* Desktop Menu */}
         <nav className="hidden md:flex gap-8">
           {['Beranda', 'Area Check', 'Paket', 'FAQ'].map((item) => (
-            <a 
-              key={item} 
+            <a
+              key={item}
               href={`#${item.toLowerCase().replace(' ', '-')}`}
               className="text-white/70 font-inter font-medium text-sm hover:text-royal transition-colors relative group"
             >
@@ -41,8 +40,10 @@ export const Header: React.FC = () => {
 
         {/* CTA */}
         <MagneticButton>
-          <a 
-            href="#" 
+          <a
+            href="https://wa.me/6287777422043?text=Halo%20enzo%2C%20aku%20mau%20tanya-tanya%20soal%20paket%20akrab%20nih"
+            target="_blank"
+            rel="noopener noreferrer"
             className="flex items-center gap-2 bg-royal hover:bg-royal/90 text-white font-inter font-medium text-sm px-5 py-2.5 rounded-full transition-colors"
           >
             <MessageCircle size={18} />

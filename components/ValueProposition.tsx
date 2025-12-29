@@ -90,11 +90,11 @@ export const ValueProposition: React.FC = () => {
   return (
     <section ref={containerRef} className="py-24 w-full bg-white relative z-20">
       <div className="container mx-auto px-4 md:px-6">
-        
+
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <h2 className="font-clash font-bold text-4xl md:text-5xl text-slate-900 mb-6 tracking-tight">
-            Kenapa Harus Akrab Premium?
+            Kenapa Harus Akrab @enzonixc?
           </h2>
           <p className="font-inter text-[#64748B] text-base md:text-lg leading-relaxed max-w-xl mx-auto">
             Kami memberikan lebih dari sekadar kuota murah. Kami memberikan kepastian dan kenyamanan layanan.
@@ -106,29 +106,29 @@ export const ValueProposition: React.FC = () => {
           {features.map((item, i) => (
             <div
               key={i}
-              ref={(el) => { if(el) cardsRef.current[i] = el }}
+              ref={(el) => { if (el) cardsRef.current[i] = el }}
               onMouseEnter={() => handleMouseEnter(i)}
               onMouseLeave={() => handleMouseLeave(i)}
               className="group bg-white rounded-2xl p-8 border border-slate-100 shadow-sm relative overflow-hidden transition-colors"
             >
-                {/* Subtle Noise Texture on Cards */}
-                <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-multiply" style={{backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`}}></div>
+              {/* Subtle Noise Texture on Cards */}
+              <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-multiply" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}></div>
 
-                <div className="relative z-10 flex flex-col items-start gap-5">
-                    {/* Icon Wrapper */}
-                    <div 
-                        ref={(el) => { if(el) iconsRef.current[i] = el }}
-                        className="w-14 h-14 rounded-xl bg-royal/5 flex items-center justify-center text-royal border border-royal/10"
-                    >
-                        <item.icon size={28} />
-                    </div>
-                    
-                    {/* Text Content */}
-                    <div>
-                        <h3 className="font-clash font-bold text-xl text-slate-900 mb-2">{item.title}</h3>
-                        <p className="font-inter text-slate-500 text-sm leading-relaxed">{item.desc}</p>
-                    </div>
+              <div className="relative z-10 flex flex-col items-start gap-5">
+                {/* Icon Wrapper */}
+                <div
+                  ref={(el) => { if (el) iconsRef.current[i] = el }}
+                  className="w-14 h-14 rounded-xl bg-royal/5 flex items-center justify-center text-royal border border-royal/10"
+                >
+                  <item.icon size={28} />
                 </div>
+
+                {/* Text Content */}
+                <div>
+                  <h3 className="font-clash font-bold text-xl text-slate-900 mb-2">{item.title}</h3>
+                  <p className="font-inter text-slate-500 text-sm leading-relaxed">{item.desc}</p>
+                </div>
+              </div>
             </div>
           ))}
         </div>
